@@ -1,0 +1,70 @@
+.animation-item {
+  width: 100px;
+  height: 100px;
+  position: absolute;
+}
+
+#item {
+  background-color: var(--item-color, red);
+}
+
+#newItem {
+  background-color: var(--new-item-color, blue);
+}
+
+.interaction-animation {
+  animation-duration: 0.5s;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+.adding {
+  animation-name: addAnimation;
+}
+
+.alerting {
+  animation-name: alertAnimation;
+}
+
+.dragging {
+  cursor: grab;
+}
+
+.dropping {
+  animation-name: dropAnimation;
+}
+
+.sorting {
+  animation-name: sortAnimation;
+}
+
+.deleting {
+  animation-name: deleteAnimation;
+}
+
+@keyframes addAnimation {
+  from { transform: scale(0); }
+  to { transform: scale(1); }
+}
+
+@keyframes alertAnimation {
+  0% { background-color: red; }
+  50% { background-color: yellow; }
+  100% { background-color: red; }
+}
+
+@keyframes dropAnimation {
+  from { opacity: 0; transform: translateY(-100px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes sortAnimation {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+  100% { transform: translateY(0); }
+}
+
+@keyframes deleteAnimation {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
