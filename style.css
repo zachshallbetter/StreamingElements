@@ -4,7 +4,7 @@
   position: absolute;
 }
 
-#item {
+#item, #newItem {
   background-color: var(--item-color, red);
 }
 
@@ -18,8 +18,8 @@
   animation-fill-mode: forwards;
 }
 
-.adding {
-  animation-name: addAnimation;
+.adding, .alerting, .dropping, .sorting, .deleting {
+  animation-name: addAnimation; /* Default animation */
 }
 
 .alerting {
@@ -48,9 +48,8 @@
 }
 
 @keyframes alertAnimation {
-  0% { background-color: red; }
+  0%, 100% { background-color: red; }
   50% { background-color: yellow; }
-  100% { background-color: red; }
 }
 
 @keyframes dropAnimation {
@@ -59,9 +58,8 @@
 }
 
 @keyframes sortAnimation {
-  0% { transform: translateY(0); }
+  0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-20px); }
-  100% { transform: translateY(0); }
 }
 
 @keyframes deleteAnimation {

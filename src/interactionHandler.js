@@ -16,20 +16,29 @@ export class InteractionHandler {
     }
 
     handleInteraction(interactionType) {
-        if (this.#interactionTypes.has(interactionType)) {
-            this.#resetInteractionClasses();
-            this.#applyInteractionClass(interactionType);
-            this.#resetClassAfterTimeout(interactionType);
-        } else {
-            console.error(`Interaction type "${interactionType}" does not exist.`);
+        try {
+            if (this.#interactionTypes.has(interactionType)) {
+                this.#resetInteractionClasses();
+                this.#applyInteractionClass(interactionType);
+                this.#resetClassAfterTimeout(interactionType);
+            } else {
+                console.error(`Interaction type "${interactionType}" does not exist.`);
+            }
+        } catch (error) {
+            console.error(`Error handling interaction: ${error}`);
         }
     }
 
     onInteraction(callback) {
-        this.#interactionTypes.forEach(type => {
-            this.#domElement.addEventListener(type, () => {
-                callback(type);
-            });
+        this.#domElement.addEventListener('interaction', (event) => {
+            try {
+                const type = event.detail.interactionType;
+                if (this.#interactionTypes.has(type)) {
+                    callback(type);
+                }
+            } catch (error) {
+                console.error(`Error handling interaction: ${error}`);
+            }
         });
     }
 
@@ -60,4 +69,3 @@ export class InteractionHandler {
         this.#timeoutId = setTimeout(callback, delay);
     }
 }
-

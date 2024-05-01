@@ -1,4 +1,4 @@
-import { configModule } from './animation/controller.js';
+import { setupAnimationPackage } from './index.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     const elements = [
@@ -9,12 +9,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     elements.forEach(({ elementId, configType }) => {
         const domElement = document.getElementById(elementId);
-        const interactionHandler = configModule.createInteractionHandler(domElement, configModule.interactionConfig.interactionTypes);
-        const animationEngine = configModule.createAnimationEngine(domElement, configType);
+        const { animator, start } = setupAnimationPackage(domElement, configType);
 
-        interactionHandler.onInteraction((type) => {
-            console.log(`Interaction of type ${type} detected on element ${elementId}`);
-            animationEngine.start();
+        domElement.addEventListener('interaction', (event) => {
+            console.log(`Interaction of type ${event.type} detected on element ${elementId}`);
+            start();
         });
     });
 });

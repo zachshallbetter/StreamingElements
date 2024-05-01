@@ -41,3 +41,64 @@ Control Parameters: The AnimationFactory class allows for additional control ove
 
 
 In summary, the types of animations produced by this system are entirely dependent on the CSS classes provided to the Animator and AnimationFactory instances. The JavaScript code manages the timing, sequence, and control of these animations, but the visual representation is defined in the CSS.
+
+
+// Example usage:
+// const animationPackage = setupAnimationPackage(document.getElementById('myElement'), 'itemAddition');
+// animationPackage.start();
+// animationPackage.configure({ speed: 2, loopCount: 3, transitions: ['ease-in', 'ease-out'] });
+
+/*
+ * Usage:
+ * 
+ * // Import the necessary classes from the animationFactory module
+ * import { Animator, AnimationFactory, AnimationEngine } from './animationFactory.js';
+ * 
+ * // Instantiate the AnimationFactory class
+ * // Pass an object with the HTML element to animate and the sequence of animations
+ * const animationFactory = new AnimationFactory({
+ *     item: document.getElementById('item'), // The HTML element to animate
+ *     animationsSequence: [ // The sequence of animations to apply
+ *         { className: 'fadeIn', duration: 300 }, // Each animation is an object with a CSS class name and duration
+ *         { className: 'expand', duration: 200 },
+ *         { className: 'settle', duration: 100 },
+ *     ],
+ * });
+ * 
+ * // Start the animation sequence
+ * animationFactory.start();
+ * 
+ * // Instantiate the AnimationEngine class
+ * // Pass an object with the target HTML element, the animation sequence, and control parameters
+ * const animationEngine = new AnimationEngine({
+ *     targetElement: document.getElementById('item'), // The HTML element to animate
+ *     animationSequence: [ // The sequence of animations to apply
+ *         { className: 'fadeIn', duration: 300 }, // Each animation is an object with a CSS class name and duration
+ *         { className: 'expand', duration: 200 },
+ *         { className: 'settle', duration: 100 },
+ *     ],
+ *     controlParams: { loopCount: 1, speed: 1.5 }, // Control parameters for the animation sequence
+ * });
+ * 
+ * // Schedule an event to trigger the start of the animation sequence
+ * // In this case, the animation will start when the target element is clicked
+ * animationEngine.scheduleEvent('click');
+ * 
+ * // Configure the animation sequence with new parameters
+ * // This will update the speed, loop count, and transitions of the animation sequence
+ * // Configure the animation
+ * animationEngine.configureAnimation({ speed: 2, loopCount: 2, transitions: ['ease-in', 'ease-out'] });
+ * 
+ * // Get the animation controls
+ * const controls = animationEngine.animationControls();
+ * 
+ * // Adjust the animation speed
+ * controls.adjustAnimationSpeed(2);
+ * 
+ * // Modify the animation loop count
+ * // Example: controls.adjustAnimationLoopCount(3);
+ * // The above example will set the animation loop count to 3.
+ * // The loop count is a parameter that determines the repetition of the animation sequence.
+ * // If the loop count is set to 1, the animation sequence will play once and then halt.
+ * // If the loop count is set to 0, the animation sequence will continue to play indefinitely until it is manually stopped.
+ */

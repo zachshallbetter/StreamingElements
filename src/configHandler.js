@@ -1,5 +1,5 @@
 import { AnimationEngine } from './animationEngine.js';
-import { InteractionHandler, interactionTypes } from '../interationManager.js';
+import { InteractionHandler, interactionTypes } from './interactionHandler.js'; // Corrected the typo in the import path
 import { Animator } from './animator.js';
 
 export const configModule = (() => {
@@ -8,7 +8,7 @@ export const configModule = (() => {
         return new InteractionHandler(domElement, filteredTypes);
     };
 
-    const animationConfigs = {
+    const defaultAnimationConfigs = {
         itemAddition: {
             animationSequence: [
                 { className: 'fadeIn', duration: 300 },
@@ -31,23 +31,24 @@ export const configModule = (() => {
         interactionTypes: ['click', 'mouseover', 'mouseout'],
     };
 
-    const createAnimationEngine = (targetElement, configType) => {
+    const createAnimationEngine = (targetElement, configType, customConfig = {}) => {
         if (!targetElement) {
             console.warn('No target element provided.');
             return null;
         }
-        const config = animationConfigs[configType];
+        const config = {...defaultAnimationConfigs[configType], ...customConfig};
         if (!config) {
             console.warn(`Animation config for '${configType}' not found.`);
             return null;
         }
         const { animationSequence, controlParams } = config;
-        return new AnimationEngine(targetElement, animationSequence, controlParams);
+        const animator = new Animator({ item: targetElement, animations: animationSequence });
+        return new AnimationEngine(targetElement, animator, controlParams);
     };
 
     return {
         createInteractionHandler,
-        animationConfigs,
+        defaultAnimationConfigs,
         interactionConfig,
         createAnimationEngine,
     };

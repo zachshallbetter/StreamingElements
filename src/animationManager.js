@@ -1,9 +1,10 @@
-import { configModule } from './animationController.js'
+import { configModule } from './configHandler.js'  // Updated import path
+import { EventManager } from './eventManager.js';  // Import EventManager for event handling
 
-export default class AnimationManager {
+export default class AnimationController {
     #item;
     #animationEngine;
-    #eventListeners;
+    #eventManager;  // Using EventManager for event handling
 
     constructor(item, configType) {
         this.#validateHTMLElement(item);
@@ -14,16 +15,14 @@ export default class AnimationManager {
         if (!this.#animationEngine) {
             throw new Error(`Failed to create animation engine for config type: ${configType}`);
         }
-        this.#eventListeners = new Map();
+        this.#eventManager = new EventManager();  // Initialize EventManager
         this.#initialize();
     }
-
     #initialize() {
         const animationConfig = this.#animationEngine.animationControls();
         animationConfig.forEach(({ type, className, duration }) => {
             const listener = () => this.#animationEngine.startAnimation(className, duration);
-            this.#item.addEventListener(type, listener);
-            this.#eventListeners.set(type, listener);
+            this.#eventManager.addEvent(type, listener, this.#item);  // Use EventManager to manage events
         });
     }
 
@@ -31,18 +30,13 @@ export default class AnimationManager {
         this.#validateString(type);
         this.#validateFunction(listener);
 
-        this.#item.addEventListener(type, listener);
-        this.#eventListeners.set(type, listener);
+        this.#eventManager.addEvent(type, listener, this.#item);  // Use EventManager to manage events
     }
 
     removeEventListener(type) {
         this.#validateString(type);
 
-        const listener = this.#eventListeners.get(type);
-        if (listener) {
-            this.#item.removeEventListener(type, listener);
-            this.#eventListeners.delete(type);
-        }
+        this.#eventManager.removeEvent(type, this.#item);  // Use EventManager to manage events
     }
 
     updateAnimationConfig(configType) {
@@ -52,10 +46,7 @@ export default class AnimationManager {
         if (!this.#animationEngine) {
             throw new Error(`Failed to update animation engine for config type: ${configType}`);
         }
-        this.#eventListeners.forEach((listener, type) => {
-            this.#item.removeEventListener(type, listener);
-        });
-        this.#eventListeners.clear();
+        this.#eventManager.removeAllEvents(this.#item);  // Use EventManager to manage events
         this.#initialize();
     }
 
