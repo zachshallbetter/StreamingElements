@@ -122,5 +122,4 @@ Early-stage. The repository has one tag, `v0.1.0`, and no automated tests. The u
 
 ## License
 
-No license is declared yet.
-
+MIT. See [LICENSE](LICENSE).
