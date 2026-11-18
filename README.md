@@ -101,3 +101,26 @@ export class InteractionHandler {
 
 ## Conclusion
 This Animation Management System provides a robust and flexible framework for managing complex animations in web applications. By following the guidelines and utilizing the provided classes, developers can create interactive and visually appealing web applications.
+
+## Repository map
+
+- `index.html`, `style.css`: the demo page, "Interactive Animation Showcase".
+- `index.js`: the demo entry point; wires the demo elements to `setupAnimationPackage`.
+- `src/`: the animation system (`animator.js`, `animationEngine.js`, `animationManager.js`, `configHandler.js`, `eventManager.js`, `interactionHandler.js`, and the `index.js` entry that exports `setupAnimationPackage`).
+- `data.json`: data file (currently an empty array).
+- `test/test.js`: a demo script for `InteractiveElement`, not wired to a test runner (see Verification).
+
+## Verification
+
+The repository has no `package.json`, build step, linter or test runner, so there is no automated check to run. To check a change by hand, serve the repository root with any static file server (the entry point is an ES module, so `index.html` will not work from a `file://` URL), open `index.html`, click the demo items, and watch the browser console.
+
+`test/test.js` is not a runnable test: it imports `./animation/animator.js/index.js`, a path that does not exist in the repository.
+
+## Status and limitations
+
+Early-stage. The repository has one tag, `v0.1.0`, and no automated tests. The usage examples above are illustrative and the demo page has not been verified to run end to end, so treat the API as unstable.
+
+## License
+
+No license is declared yet.
+
